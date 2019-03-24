@@ -114,6 +114,69 @@ public class Negocio implements java.io.Serializable{
         }
     }
     
+       public void agregarPersona(int cod, String nom, String ape){
+            Persona per = new Persona(cod,nom,ape);
+            if(persona.containsKey(cod)){
+                System.out.println("La persona ya esta registrada");
+            }else{
+                persona.put(cod, per);
+            }                       
+    }
+    
+ public void agregarReporte(int id){
+        try{
+            if(persona.containsKey(id)){
+                System.out.println("Codigo del reporte: ");
+                int codigo=Integer.parseInt(datos.readLine());
+                System.out.println("Empresa: ");
+                String nombre=datos.readLine();
+                System.out.println("Estado P - N");
+                String estado=datos.readLine();
+                if((estado.equals("P"))||((estado.equals("N")))){
+                     System.out.println("Valor: ");
+                     int valor=Integer.parseInt(datos.readLine());
+                     Reporte rep=new Reporte(codigo,nombre,estado,valor);
+                     persona.get(id).getReporte().put(codigo, rep);                  
+                }else{
+                 System.out.println("El estado no es valido");
+                }              
+            }else{
+                System.out.println("El cliente no está registrado");
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+ 
+    
+    public void eliminarReporte(int cod){
+          try{
+              if(persona.containsKey(cod)){
+                  if(persona.get(cod).reporte.isEmpty()){
+                      System.out.println("El usuario no tiene reportes");
+                  }else{
+                      int codigoReporte;
+                      System.out.println("Digite codigo del reporte");
+                      codigoReporte = Integer.parseInt(datos.readLine()); 
+                       for(Reporte report : persona.get(cod).getReporte().values()){  
+                           if(report.getCodigo() == codigoReporte){
+                               if(report.getCodigo() == codigoReporte && report.getEstado().equals("P")){
+                                    System.out.println("No se puede eliminar un reporte Positivo");
+                               }else{
+                                     persona.get(cod).getReporte().remove(codigoReporte);
+                                     System.out.println("Reporte eliminado satisfactoriamente");
+                                }
+                           }                         
+                      }
+                  }
+              }else{
+                  System.out.println("El cliente no esta en el sistema...");
+              }
+          }catch(Exception ex){
+                System.out.println(ex.getMessage());
+                
+          }
+      }
     
     
 }
