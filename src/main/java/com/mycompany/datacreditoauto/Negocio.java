@@ -179,4 +179,26 @@ public class Negocio implements java.io.Serializable{
       }
     
     
+       public void verReporte (int cod){
+            if(persona.containsKey(cod)){
+                if(persona.get(cod).reporte.isEmpty()){
+                    System.out.println("La persona no tiene reportes");
+                }else {
+                int i = 1;
+                System.out.println("Reporte de la Persona " + persona.get(cod).getNombre()+ " " + persona.get(cod).getApellido());
+                    for(Reporte report : persona.get(cod).getReporte().values()){
+                        System.out.println("Reporte numero :" + i);
+                        System.out.println("Codigo :" + report.getCodigo());
+                        System.out.println("Empresa :" + report.getEmpresa());
+                        System.out.println("Estado P - N :" + report.getEstado());
+                        System.out.println("Valor :" + report.getValor());
+                        i++;
+                }
+            }
+          }else{
+                System.out.println("La persona no esta registrada");
+            }
+        }
+            
+       
 }
